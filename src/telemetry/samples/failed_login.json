@@ -1,0 +1,20 @@
+{
+  "type": "failed_login_attempt",
+  "log": {
+    "timestamp": "2023-05-10T15:30:45.123Z",
+    "ip_address": "192.168.1.100",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36",
+    "browser": "Chrome",
+    "browser_version": "93.0.4577.63",
+    "operating_system": "Windows 10",
+    "username": "johndoe@example.com",
+    "failure_reason": "Invalid password",
+    "attempt_number": 2,
+    "geo_location": {
+      "country": "United States",
+      "city": "New York",
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  }
+}
