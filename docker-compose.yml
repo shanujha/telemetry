@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  nestjs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./src:/app/src
+      - ./node_modules:/app/node_modules
+    command: npm run start:prod
+
+  # Add any other services your app might need, such as a database
+  # For example:
+  # database:
+  #   image: postgres:13
+  #   environment:
+  #     POSTGRES_DB: your_db_name
+  #     POSTGRES_USER: your_user
+  #     POSTGRES_PASSWORD: your_password
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres_data:
