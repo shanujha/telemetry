@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TelemetryService } from './telemetry.service';
 import { CreateTelemetryDto } from './dto/create-telemetry.dto';
 import { UpdateTelemetryDto } from './dto/update-telemetry.dto';
+import { DynamicSchemaService } from './service/dynamic-schema.service';
 
 @Controller('telemetry')
 export class TelemetryController {
-  constructor(private readonly telemetryService: TelemetryService) {}
-
-  @Post()
-  create(@Body() createTelemetryDto: CreateTelemetryDto) {
-    return this.telemetryService.create(createTelemetryDto);
-  }
+  constructor(private readonly telemetryService: TelemetryService, private readonly dynamicSchemaService: DynamicSchemaService) {}
 
   @Get()
-  findAll() {
+  list() {
     return this.telemetryService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.telemetryService.findOne(+id);
+  @Post()
+  async log(@Body() body: any, @Query() query: any) {
+    const tableName = body.type;
+    const debug = query.debug === 'true';
+    const response = await this.dynamicSchemaService.createSchemaFromBody(body.log, tableName, debug);
+    return response;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTelemetryDto: UpdateTelemetryDto) {
-    return this.telemetryService.update(+id, updateTelemetryDto);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.telemetryService.findOne(+id);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.telemetryService.remove(+id);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateTelemetryDto: UpdateTelemetryDto) {
+  //   return this.telemetryService.update(+id, updateTelemetryDto);
+  // }
+
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.telemetryService.remove(+id);
+  // }
 }
