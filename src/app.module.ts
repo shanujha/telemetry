@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TelemetryModule } from './telemetry/telemetry.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [TelemetryModule, TypeOrmModule.forRoot({
@@ -14,7 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     database: 'development_db',
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true, // Note: Disable this in production
-  })
+  }), UserModule
 ],
   controllers: [AppController],
   providers: [AppService],
