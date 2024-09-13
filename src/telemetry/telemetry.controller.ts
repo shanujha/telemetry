@@ -8,9 +8,15 @@ import { DynamicSchemaService } from './service/dynamic-schema.service';
 export class TelemetryController {
   constructor(private readonly telemetryService: TelemetryService, private readonly dynamicSchemaService: DynamicSchemaService) {}
 
+
   @Get()
   list() {
-    return this.telemetryService.findAll();
+    return this.dynamicSchemaService.fetchAllTables();
+  }
+
+  @Get('entries')
+  entries(@Query() query) {
+    return this.dynamicSchemaService.fetchAllEntriesFromTable(query.table);
   }
 
   @Post()
