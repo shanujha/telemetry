@@ -67,5 +67,34 @@ export class DynamicSchemaService {
         const response = { message, query: debug ? insertQuery : undefined, orderedValues: debug ? orderedValues : undefined}
         return response;
     }
+
+    async fetchAllTables() {
+
+        const query = `
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public' 
+            AND table_type = 'BASE TABLE'
+        `;
+        
+        try {
+            const tables = await this.dataSource.query(query);
+            return tables.map(table => table.table_name);
+        } catch (error) {
+            console.error('Error fetching tables:', error);
+            throw new Error(`Failed to fetch tables: ${error.message}`);
+        }
+    }
+
+    async fetchAllEntriesFromTable(tableName: string) {
+        try {
+            const query = `SELECT * FROM ${tableName}`;
+            const entries = await this.dataSource.query(query);
+            return entries;
+        } catch (error) {
+            console.error(`Error fetching entries from ${tableName}:`, error);
+            throw new Error(`Failed to fetch entries from ${tableName}: ${error.message}`);
+        }
+    }
 }
 
