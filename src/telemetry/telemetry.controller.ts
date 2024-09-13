@@ -7,7 +7,7 @@ import { DynamicSchemaService } from './service/dynamic-schema.service';
 @Controller('telemetry')
 export class TelemetryController {
   constructor(private readonly telemetryService: TelemetryService, private readonly dynamicSchemaService: DynamicSchemaService) {}
-
+  
 
   @Get()
   list() {
