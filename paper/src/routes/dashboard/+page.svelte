@@ -2,8 +2,17 @@
 	import { onMount } from 'svelte';
 
 	let users = [];
+	/**
+	 * @type {any[]}
+	 */
 	let entries = [];
+	/**
+	 * @type {any[]}
+	 */
 	let tables = [];
+	/**
+	 * @type {any}
+	 */
 	let selectedTable = null;
 
 	onMount(async () => {
@@ -13,7 +22,11 @@
 		tables = await tablesResponse.json();
 	});
 
-	const fetchEntries = async (tableName) => {
+	/**
+	 *
+	 * @param tableName
+	 */
+	const fetchEntries = async (/** @type {any} */ tableName) => {
 		if (tableName) {
 			const entriesData = await fetch(`http://localhost:3000/telemetry/entries?table=${tableName}`);
 			entries = await entriesData.json();
@@ -32,14 +45,23 @@
 			<h2 class="text-xl font-bold">Tables</h2>
 			<ul class="mt-4 space-y-2 cursor-pointer">
 				{#each tables as table}
-					<li
-						class="p-2 bg-gray-200 rounded-md cursor-pointer"
-						on:click={() => (selectedTable = table)}
-					>
-						{table}
+					<li>
+						<button
+							class="p-2 w-full bg-gray-200 rounded-md cursor-pointer"
+							on:click={() => (selectedTable = table)}
+							type="button"
+						>
+							{table}
+						</button>
 					</li>
 				{/each}
 			</ul>
+		</div>
+		<hr />
+		<div class="p-4">
+			<button type="button" class="p-2 bg-gray-200 rounded-md cursor-pointer w-full"
+				>+ New View</button
+			>
 		</div>
 	</aside>
 
